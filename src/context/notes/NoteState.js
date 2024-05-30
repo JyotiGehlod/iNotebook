@@ -25,17 +25,16 @@ const NoteStatus = (props) => {
   const [notes, setNotes] = useState(noteInitial);
   //add note 
   const addNote = async (title, description, tag) => {
-    // TODO: API Call
-    // API Call 
-    const response = await fetch(`localhost:5000/api/notes/addnote`, {
+    
+    
+    const response = await fetch(`${host}/api/notes/addnote`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "auth-token"  : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY1MTc1ODJkOTdkYjYyNGI1OTdkYTQzIn0sImlhdCI6MTcxNjY5ODY5NH0.2-EggWghfZ_X4-dP_G-g9gk3VmN-nBw7JcR0Ck4Xkws"
-      },
-      body: JSON.stringify({title, description, tag}),
-    });
+      },      body: JSON.stringify({title, description, tag}),
 
+    });
     
     console.log("Adding a new note");
 
