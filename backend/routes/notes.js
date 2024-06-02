@@ -18,7 +18,7 @@ router.get('/fetchallusers', fetchuser, async (req, res) => {
 });
 
 // ROUTE 2: Get add new notes using: POST "/api/auth/getuser". 
-router.get('/addnote', fetchuser, [
+router.post('/addnote', fetchuser, [
     body('title', "plz Enter valid title").isLength({ min: 3 }),
     body('description', "plz Enter valid title").isLength({ min: 5 })
 ], async (req, res) => {
@@ -47,20 +47,17 @@ router.get('/addnote', fetchuser, [
 router.put('/updatenote/:id', fetchuser, async (req, res) => {
 
     // create new notes
-    const newNote = {};
-
     const { title, description, tag } = req.body
     try {
-
-
+       
+        const newNote = {};
         if (title) { newNote.title = title }
-        if (description) { newNote.description = title }
-        if (tag) { newNote.tag = title }
+        if (description) { newNote.description = description }
+        if (tag) { newNote.tag = tag }
 
         // find user to be updated and update it
 
         let note = await Note.findById(req.params.id);
-
         if (!note) { res.status(404).send("Not Found") };
 
         if (note.user.toString() !== req.user.id) {
@@ -75,6 +72,7 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
         res.status(500).json({ error: "some error occurd" });
     }
 })
+
 // ROUTE 4: Update an existing Note using: PUT "/api/notes/updatenote". Login required
 
 router.delete('/deletenote/:id', fetchuser, async (req, res) => {
